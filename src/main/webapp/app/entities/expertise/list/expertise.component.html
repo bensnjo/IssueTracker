@@ -1,0 +1,76 @@
+<div>
+  <h2 id="page-heading" data-cy="ExpertiseHeading">
+    <span>Expertise</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-expertise"
+        [routerLink]="['/expertise/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="expertise?.length === 0">
+    <span>No expertise found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="expertise && expertise.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>No</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Description</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expertise of expertise; let i = index; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/expertise', expertise.id, 'view']">{{i +1 }}</a>
+          </td>
+          <td>{{ expertise.name }}</td>
+          <td>{{ expertise.description }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/expertise', expertise.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/expertise', expertise.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(expertise)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

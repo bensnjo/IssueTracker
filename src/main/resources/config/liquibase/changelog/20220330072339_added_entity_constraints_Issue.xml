@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Issue.
+    -->
+    <changeSet id="20220330072339-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue__category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="category"/>
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="product"/>
+
+        <addForeignKeyConstraint baseColumnNames="assignee_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue__assignee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="developer"/>
+
+        <addForeignKeyConstraint baseColumnNames="priority_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue__priority_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="priority"/>
+
+        <addForeignKeyConstraint baseColumnNames="department_id"
+                                 baseTableName="issue"
+                                 constraintName="fk_issue__department_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="department"/>
+    </changeSet>
+</databaseChangeLog>

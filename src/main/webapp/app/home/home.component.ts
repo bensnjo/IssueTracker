@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+// charts components
 
 @Component({
   selector: 'jhi-home',
@@ -14,17 +15,27 @@ import { Account } from 'app/core/auth/account.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
 
+// charts
+
+// end charts
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private accountService: AccountService, private router: Router) {}
+  constructor(private accountService: AccountService, private router: Router) {
+
+  }
 
   ngOnInit(): void {
+
+
     this.accountService
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
-  }
+    if (this.account === null) {
+            			this.router.navigate(['/login']);
+            		}
 
+  }
   login(): void {
     this.router.navigate(['/login']);
   }

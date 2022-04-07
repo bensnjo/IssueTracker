@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20220330072342",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "developer",
+  "fields": [
+    {
+      "fieldName": "staffNo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "fullName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "100"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    }
+  ],
+  "fluentMethods": true,
+  "javadoc": "The Developer entity.",
+  "jpaMetamodelFiltering": false,
+  "name": "Developer",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "expertise",
+      "otherEntityRelationshipName": "developer",
+      "ownerSide": true,
+      "relationshipName": "expertise",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "developer",
+      "ownerSide": false,
+      "relationshipName": "product",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

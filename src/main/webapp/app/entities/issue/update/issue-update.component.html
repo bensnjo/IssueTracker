@@ -1,0 +1,210 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-issue-heading" data-cy="IssueCreateUpdateHeading">Create or edit a Issue</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_defectNumber">Defect Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="defectNumber"
+            id="field_defectNumber"
+            data-cy="defectNumber"
+            formControlName="defectNumber"
+          />
+          <div
+            *ngIf="editForm.get('defectNumber')!.invalid && (editForm.get('defectNumber')!.dirty || editForm.get('defectNumber')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('defectNumber')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" *ngIf="editForm.get('defectNumber')?.errors?.maxlength">
+              This field cannot be longer than 10 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.maxlength">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_version">Version</label>
+          <input type="text" class="form-control" name="version" id="field_version" data-cy="version" formControlName="version" />
+          <div *ngIf="editForm.get('version')!.invalid && (editForm.get('version')!.dirty || editForm.get('version')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('version')?.errors?.maxlength">
+              This field cannot be longer than 10 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_status">Status</label>
+          <select class="form-control" name="status" formControlName="status" id="field_status" data-cy="status">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let status of statusValues" [value]="status">{{status}}</option>
+          </select>
+          <div *ngIf="editForm.get('status')!.invalid && (editForm.get('status')!.dirty || editForm.get('status')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('status')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_dateIdentified">Date Identified</label>
+          <div class="input-group">
+            <input
+              id="field_dateIdentified"
+              data-cy="dateIdentified"
+              type="text"
+              class="form-control"
+              name="dateIdentified"
+              ngbDatepicker
+              #dateIdentifiedDp="ngbDatepicker"
+              formControlName="dateIdentified"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateIdentifiedDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dateIdentified')!.invalid && (editForm.get('dateIdentified')!.dirty || editForm.get('dateIdentified')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('dateIdentified')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_dateClosed">Date Closed</label>
+          <div class="input-group">
+            <input
+              id="field_dateClosed"
+              data-cy="dateClosed"
+              type="text"
+              class="form-control"
+              name="dateClosed"
+              ngbDatepicker
+              #dateClosedDp="ngbDatepicker"
+              formControlName="dateClosed"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateClosedDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_comments">Comments</label>
+          <input type="text" class="form-control" name="comments" id="field_comments" data-cy="comments" formControlName="comments" />
+          <div *ngIf="editForm.get('comments')!.invalid && (editForm.get('comments')!.dirty || editForm.get('comments')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('comments')?.errors?.maxlength">
+              This field cannot be longer than 1000 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_category">Category</label>
+          <select class="form-control" id="field_category" data-cy="category" name="category" formControlName="category">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="categoryOption.id === editForm.get('category')!.value?.id ? editForm.get('category')!.value : categoryOption"
+              *ngFor="let categoryOption of categoriesSharedCollection; trackBy: trackCategoryById"
+            >
+              {{ categoryOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_product">Product</label>
+          <select class="form-control" id="field_product" data-cy="product" name="product" formControlName="product">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="productOption.id === editForm.get('product')!.value?.id ? editForm.get('product')!.value : productOption"
+              *ngFor="let productOption of productsSharedCollection; trackBy: trackProductById"
+            >
+              {{ productOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_assignee">Assignee</label>
+          <select class="form-control" id="field_assignee" data-cy="assignee" name="assignee" formControlName="assignee">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="developerOption.id === editForm.get('assignee')!.value?.id ? editForm.get('assignee')!.value : developerOption"
+              *ngFor="let developerOption of developersSharedCollection; trackBy: trackDeveloperById"
+            >
+              {{ developerOption.fullName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_priority">Priority</label>
+          <select class="form-control" id="field_priority" data-cy="priority" name="priority" formControlName="priority">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="priorityOption.id === editForm.get('priority')!.value?.id ? editForm.get('priority')!.value : priorityOption"
+              *ngFor="let priorityOption of prioritiesSharedCollection; trackBy: trackPriorityById"
+            >
+              {{ priorityOption.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_department">Department</label>
+          <select class="form-control" id="field_department" data-cy="department" name="department" formControlName="department">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                departmentOption.id === editForm.get('department')!.value?.id ? editForm.get('department')!.value : departmentOption
+              "
+              *ngFor="let departmentOption of departmentsSharedCollection; trackBy: trackDepartmentById"
+            >
+              {{ departmentOption.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

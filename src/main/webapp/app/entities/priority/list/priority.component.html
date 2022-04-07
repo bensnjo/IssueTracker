@@ -1,0 +1,78 @@
+<div>
+  <h2 id="page-heading" data-cy="PriorityHeading">
+    <span>Priorities</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-priority"
+        [routerLink]="['/priority/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="priorities?.length === 0">
+    <span>No priorities found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="priorities && priorities.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>No</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Description</span></th>
+          <th scope="col"><span>SLA</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let priority of priorities; let i = index; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/priority', priority.id, 'view']">{{i + 1 }}</a>
+          </td>
+          <td>{{ priority.name }}</td>
+          <td>{{ priority.description }}</td>
+          <td>{{ priority.sla }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/priority', priority.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/priority', priority.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button type="submit" (click)="delete(priority)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

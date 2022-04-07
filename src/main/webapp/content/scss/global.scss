@@ -11,17 +11,18 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
+  font-weight: 200;
 }
 
 /* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
-  color: #533f03;
-  font-weight: bold;
+  color: #000000 !important;
+  font-weight: lighter !important;
+  text-decoration: none !important;
 }
 
 a:hover {
-  color: #533f03;
+  color: #DA3832 !important;
 }
 
 /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
@@ -99,6 +100,8 @@ Generic styles
 
 .form-control {
   background-color: #fff;
+  length: 40px;
+
 }
 
 .readonly {
