@@ -1,6 +1,7 @@
 package ke.go.kra.service.impl;
 
 import ke.go.kra.domain.Issue;
+import ke.go.kra.domain.enumeration.Status;
 import ke.go.kra.repository.IssueRepository;
 import ke.go.kra.service.IssueService;
 import org.slf4j.Logger;
@@ -88,5 +89,25 @@ public class IssueServiceImpl implements IssueService {
     public Mono<Void> delete(Long id) {
         log.debug("Request to delete Issue : {}", id);
         return issueRepository.deleteById(id);
+    }
+
+    @Override
+    public Mono<Long> countAllClosed() {
+        return issueRepository.findByStatus(Status.CLOSED).count();
+    }
+
+    @Override
+    public Mono<Long> countAllOpen() {
+        return issueRepository.findByStatus(Status.OPEN).count();
+    }
+
+    @Override
+    public Mono<Long> countAllInProgress() {
+        return issueRepository.findByStatus(Status.IN_PROGRESS).count();
+    }
+
+    @Override
+    public Mono<Long> countAllRejected() {
+        return issueRepository.findByStatus(Status.REJECTED).count();
     }
 }

@@ -31,8 +31,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => (this.account = account));
+
     if (this.account === null) {
-            			this.router.navigate(['/login']);
+        this.router.navigate(['/login']);
             		}
 
   }

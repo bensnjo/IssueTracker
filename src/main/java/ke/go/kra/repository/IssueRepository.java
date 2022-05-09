@@ -1,6 +1,7 @@
 package ke.go.kra.repository;
 
 import ke.go.kra.domain.Issue;
+import ke.go.kra.domain.enumeration.Status;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.relational.core.query.Criteria;
@@ -19,6 +20,9 @@ public interface IssueRepository extends ReactiveCrudRepository<Issue, Long>, Is
 
     @Query("SELECT * FROM issue entity WHERE entity.category_id = :id")
     Flux<Issue> findByCategory(Long id);
+
+    @Query("SELECT * FROM issue entity WHERE entity.status =:status")
+    Flux<Issue> findByStatus(Status status);
 
     @Query("SELECT * FROM issue entity WHERE entity.category_id IS NULL")
     Flux<Issue> findAllWhereCategoryIsNull();

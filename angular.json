@@ -5,6 +5,7 @@
   "projects": {
     "issue-tracker": {
       "projectType": "application",
+      
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -23,6 +24,9 @@
             "customWebpackConfig": {
               "path": "./webpack/webpack.custom.js"
             },
+            
+            "allowedCommonJsDependencies": ["clone-deep" 
+            ],
             "outputPath": "target/classes/static/",
             "index": "src/main/webapp/index.html",
             "main": "src/main/webapp/main.ts",

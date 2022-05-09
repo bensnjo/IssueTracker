@@ -15,7 +15,7 @@
       [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
 
-        <li
+        <li *jhiHasAnyAuthority="'ROLE_USER'"
           class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
@@ -28,14 +28,14 @@
           *jhiHasAnyAuthority="'ROLE_USER'"class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="issue" (click)="collapseNavbar()">
             <fa-icon icon="bars" [fixedWidth]="true"></fa-icon>
-            <span>Issue</span>
+            <span>Issues</span>
           </a>
         </li>
         <li
           *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item"  routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="product" (click)="collapseNavbar()">
             <fa-icon icon="bars" [fixedWidth]="true"></fa-icon>
-            <span>Product</span>
+            <span>Products</span>
           </a>
         </li>
 
@@ -47,7 +47,7 @@
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu"
             data-cy="adminMenu">
             <span>
-              <fa-icon icon="users-cog"></fa-icon>
+              <fa-icon icon="cog"></fa-icon>
               <span>Administration</span>
             </span>
           </a>
@@ -102,7 +102,6 @@
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-controls"
             data-cy="adminMenu">
             <span>
-              <fa-icon icon="cog"></fa-icon>
               <span>Entities</span>
             </span>
           </a>
@@ -110,42 +109,38 @@
             <li>
               <a class="dropdown-item" routerLink="category" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Category</span>
+                <span>Categories</span>
               </a>
             </li>
             <li>
               <a class="dropdown-item" routerLink="developer" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Developer</span>
+                <span>Developers</span>
               </a>
             </li>
             <li>
               <a class="dropdown-item" routerLink="department" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Department</span>
+                <span>Departments</span>
               </a>
             </li>
             <li>
               <a class="dropdown-item" routerLink="expertise" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span>Expertise</span>
               </a>
             </li>
             <li>
               <a class="dropdown-item" routerLink="priority" routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span>Priority</span>
+                <span>Priorities</span>
               </a>
             </li>
           </ul>
         </li>
         <!--entities  end-->
-        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active"
+        <li *jhiHasAnyAuthority="'ROLE_USER'"
+        ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu"
             data-cy="accountMenu">

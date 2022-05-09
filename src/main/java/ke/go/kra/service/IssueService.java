@@ -55,4 +55,29 @@ public interface IssueService {
      * @return a Mono to signal the deletion
      */
     Mono<Void> delete(Long id);
+
+    /**
+     * Returns the number of Closed issues available.
+     * @return the number of entities in the database.
+     *
+     */
+    Mono<Long> countAllClosed();
+    /**
+     * Returns the number of Open issues available.
+     * @return the number of entities in the database.
+     *
+     */
+    Mono<Long> countAllOpen();
+    /**
+     * Returns the number of issues in-progress available.
+     * @return the number of entities in the database.
+     *
+     */
+    Mono<Long> countAllInProgress();
+    /**
+     * Returns the number of Closed issues available.
+     * @return the number of entities in the database.
+     *
+     */
+    Mono<Long> countAllRejected();
 }

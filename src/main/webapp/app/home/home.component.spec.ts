@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject } from 'rxjs';
 
-import { AccountService } from 'app/core/auth/account.service';
-import { Account } from 'app/core/auth/account.model';
+import { AccountService } from '../core/auth/account.service';
+import { Account } from '../core/auth/account.model';
 
 import { HomeComponent } from './home.component';
 

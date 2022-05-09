@@ -12,11 +12,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
   imports: [
     RouterModule.forRoot(
       [
-         {
-                path: '',
-                redirectTo: 'login',
-                pathMatch: 'full',
-              },
+
         {
           path: 'admin',
           data: {
