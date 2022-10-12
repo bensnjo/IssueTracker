@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="issue">
+      <h2 data-cy="issueDetailsHeading"><span>Issue</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Defect Number</span></dt>
+        <dd>
+          <span>{{ issue.defectNumber }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ issue.description }}</span>
+        </dd>
+        <dt><span>Version</span></dt>
+        <dd>
+          <span>{{ issue.version }}</span>
+        </dd>
+        <dt><span>Status</span></dt>
+        <dd>
+          <span>{{ issue.status }}</span>
+        </dd>
+        <dt><span>Date Identified</span></dt>
+        <dd>
+          <span>{{ issue.dateIdentified | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Date Closed</span></dt>
+        <dd>
+          <span>{{ issue.dateClosed | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Comments</span></dt>
+        <dd>
+          <span>{{ issue.comments }}</span>
+        </dd>
+        <dt><span>Category</span></dt>
+        <dd>
+          <div *ngIf="issue.category">
+            <a [routerLink]="['/category', issue.category?.id, 'view']">{{ issue.category?.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Product</span></dt>
+        <dd>
+          <div *ngIf="issue.product">
+            <a [routerLink]="['/product', issue.product?.id, 'view']">{{ issue.product?.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Assignee</span></dt>
+        <dd>
+          <div *ngIf="issue.assignee">
+            <a [routerLink]="['/developer', issue.assignee?.id, 'view']">{{ issue.assignee?.fullName }}</a>
+          </div>
+        </dd>
+        <dt><span>Priority</span></dt>
+        <dd>
+          <div *ngIf="issue.priority">
+            <a [routerLink]="['/priority', issue.priority?.id, 'view']">{{ issue.priority?.name }}</a>
+          </div>
+        </dd>
+        <dt><span>Department</span></dt>
+        <dd>
+          <div *ngIf="issue.department">
+            <a [routerLink]="['/department', issue.department?.id, 'view']">{{ issue.department?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        type="button" [routerLink]="['/issue', issue.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

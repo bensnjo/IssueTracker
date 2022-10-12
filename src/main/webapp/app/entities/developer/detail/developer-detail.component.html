@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="developer">
+      <h2 data-cy="developerDetailsHeading"><span>Developer</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+
+        <dt><span>Staff No</span></dt>
+        <dd>
+          <span>{{ developer.staffNo }}</span>
+        </dd>
+        <dt><span>Full Name</span></dt>
+        <dd>
+          <span>{{ developer.fullName }}</span>
+        </dd>
+        <dt><span>Email</span></dt>
+        <dd>
+          <span>{{ developer.email }}</span>
+        </dd>
+        <dt><span>Phone Number</span></dt>
+        <dd>
+          <span>{{ developer.phoneNumber }}</span>
+        </dd>
+        <dt><span>Expertise</span></dt>
+        <dd>
+          <span *ngFor="let expertise of developer.expertise; let last = last">
+            <a [routerLink]="['/expertise', expertise?.id, 'view']">{{ expertise.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;
+      </button>
+
+      <button *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        type="button" [routerLink]="['/developer', developer.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;
+      </button>
+    </div>
+  </div>
+</div>

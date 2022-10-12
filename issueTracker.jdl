@@ -1,0 +1,75 @@
+entity Issue {
+	defectNumber String required maxlength(10),
+	description String maxlength(255),
+	version String maxlength(10),
+	status Status required,
+	dateIdentified LocalDate required,
+	dateClosed LocalDate,
+	comments String maxlength(1000)
+}
+
+entity Category {
+	name String required maxlength(50),
+    description String maxlength(255)
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Product {
+	name String required maxlength(100),
+    description String maxlength(255)
+	
+}
+/**
+ * The Developer entity.
+ */
+entity Developer {
+	staffNo String required maxlength(50),
+    fullName String required maxlength(100),
+    email String required maxlength(50),
+    phoneNumber String required maxlength(50)
+}
+
+entity Department {
+	name String maxlength(50)
+}
+
+entity Expertise {
+	name String maxlength(50),
+	description String maxlength(255)
+	
+}
+
+entity Priority {
+	name String required maxlength(50),
+	description String maxlength(255),
+	sla Integer required
+}
+enum Status {
+    OPEN, IN_PROGRESS, REJECTED, CLOSED
+}
+relationship ManyToOne {
+	Issue {category} to Category,
+	Issue {product} to Product,
+	Issue {assignee} to Developer,
+	Issue {priority} to Priority,
+    Issue {department} to Department
+	
+}
+relationship ManyToMany {
+	Product {developer} to Developer {product},
+	Developer {expertise} to Expertise {developer}
+}
+
+// Set pagination options
+paginate Developer, Product with infinite-scroll
+paginate Issue with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Department, Category
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

@@ -1,0 +1,110 @@
+<div>
+  
+  <h2 id="page-heading" data-cy="IssueHeading">
+    <span>Issues</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-issue"
+        [routerLink]="['/issue/new']">
+        <fa-icon icon="plus"></fa-icon>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="issues?.length === 0">
+    <span>No issues found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="issues && issues.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span>No</span> </th>
+          <th scope="col" jhiSortBy="defectNumber"><span>Defect No</span> </th>
+          <th scope="col" jhiSortBy="dateIdentified"><span>Date identified</span> </th>
+          <th scope="col" jhiSortBy="description"><span>Description</span> </th>
+          <th scope="col" jhiSortBy="priority.id"><span>Priority</span> </th>
+          <th scope="col" jhiSortBy="category.id"><span>Category</span> </th>
+          <th scope="col" jhiSortBy="assignee.id"><span>Assignee</span> </th>
+          <th scope="col" jhiSortBy="comments"><span>Developer Comments</span> </th>
+          <th scope="col" jhiSortBy="status"><span>Status</span> </th>
+          <th scope="col" > </th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let issue of issues; let i = index; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/issue', issue.id, 'view']">{{i+1}}</a>
+          </td>
+          <td>{{ issue.defectNumber }}</td>
+          <td>{{ issue.dateIdentified | formatMediumDate }}</td>
+          <td>{{ issue.description }}</td>
+          <td>
+            <div *ngIf="issue.priority">
+              <a [routerLink]="['/priority', issue.priority?.id, 'view']">{{ issue.priority?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="issue.category">
+              <a [routerLink]="['/category', issue.category?.id, 'view']">{{ issue.category?.name }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="issue.assignee">
+              <a [routerLink]="['/developer', issue.assignee?.id, 'view']">{{ issue.assignee?.fullName }}</a>
+            </div>
+          </td>
+
+          <td>{{ issue.comments }}</td>
+          <td>{{ issue.status }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/issue', issue.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+              </button>
+
+              <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" [routerLink]="['/issue', issue.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </button>
+
+              <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(issue)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="issues && issues.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>
